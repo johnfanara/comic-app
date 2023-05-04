@@ -5,10 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $_GET["series"]; ?> - <?php echo $_GET["publisher"]; ?> - Comic Book Collection</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="libarchive.js"></script>
-    <script src="pdf.js"></script>
-    <script src="pdf.worker.js"></script>
-    <script src="comic-viewer.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.9.359/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.9.359/pdf_viewer.js"></script>
+    <script src="js/libarchive.js"></script>
+    <script src="js/jszip.min.js"></script>>
+    <script src="js/comic-viewer.js"></script>
+
 
 
 </head>
@@ -27,7 +29,7 @@
             $publisher = $_GET["publisher"];
             $series = $_GET["series"];
             $seriesPath = 'D:\Comics\\' . $publisher . '\\' . $series;
-
+            
             $allowedExtensions = ['cbr', 'cbz'];
             $hasVolumes = false;
 

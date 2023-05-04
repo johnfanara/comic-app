@@ -1,23 +1,3 @@
-async function openComicBook(filePath) {
-    const archive = await loadArchive(filePath);
-    const files = await listFilesInArchive(archive);
-    const comicFile = findComicFile(files);
-
-    if (!comicFile) {
-        alert("No suitable file found in the archive.");
-        return;
-    }
-
-    const fileData = await readFileFromArchive(archive, comicFile);
-    const container = document.getElementById("comic-container");
-
-    if (comicFile.type === 'pdf') {
-        const pdfDocument = await pdfjsLib.getDocument({ data: fileData }).promise;
-        const pdfViewer = new pdfjsViewer.PDFViewer({ container, document: pdfDocument });
-    } else {
-        displayComicImages(container, files, archive);
-    }
-}
 
 async function loadArchive(filePath) {
     const response = await fetch(filePath);

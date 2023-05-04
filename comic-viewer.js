@@ -1,3 +1,5 @@
+let currentPageIndex = 0;
+
 async function openComic(fileUrl) {
   const comicContainer = document.getElementById('comic-container');
   comicContainer.innerHTML = '';
@@ -16,7 +18,7 @@ async function openComic(fileUrl) {
     return;
   }
 
-  const files = archive.getFiles();
+  const files = await getFilesFromArchive(archive, fileExtension);
   const comicFile = files.shift();
 
   if (!comicFile) {
@@ -37,6 +39,24 @@ async function openComic(fileUrl) {
   });
 
   comicContainer.appendChild(img);
+
+  // Add event listener for arrow key navigation
+  document.addEventListener('keydown', (event) => handleArrowKeys(event, files, comicContainer, archive));
+}
+
+async function getFilesFromArchive(archive, fileExtension) {
+  if (fileExtension === 'cbr') {
+    return archive.getFiles();
+  } else if (fileExtension === 'cbz') {
+    const files = [];
+    const zipEntries = await archive.files;
+    for (const entry of zipEntries) {
+      if (entry.name.toLowerCase().endsWith('.jpg') || entry.name.toLowerCase().endsWith('.jpeg') || entry.name.toLowerCase().endsWith('.png') || entry.name.toLowerCase().endsWith('.gif')) {
+        files.push(entry);
+      }
+    }
+    return files;
+  }
 }
 
 async function loadNextPage(files, comicContainer, archive) {
@@ -60,4 +80,12 @@ async function loadNextPage(files, comicContainer, archive) {
 
   comicContainer.innerHTML = '';
   comicContainer.appendChild(nextPageImg);
+}
+
+function handleArrowKeys(event, files, comicContainer, archive) {
+  if (event.key === 'ArrowRight') {
+    loadNextPage(files, comicContainer, archive);
+  } else if (event.key === 'ArrowLeft') {
+    alert('Previous page navigation is not supported. Click on the image to proceed to the next page.');
+  }
 }

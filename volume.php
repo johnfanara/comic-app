@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $_GET["volume"]; ?> - <?php echo $_GET["series"]; ?> - <?php echo $_GET["publisher"]; ?> - Comic Book Collection</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="scripts.js"></script>
     <script src="comic-viewer.js"></script>
 </head>
 <body>
